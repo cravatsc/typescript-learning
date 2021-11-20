@@ -1,0 +1,23 @@
+{
+  "name": "typescript-learning",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cravatsc/typescript-learning.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cravatsc/typescript-learning/issues"
+  },
+  "homepage": "https://github.com/cravatsc/typescript-learning#readme",
+  "devDependencies": {
+    "typescript": "^4.5.2"
+  }
+}
