@@ -12,3 +12,10 @@ export const objectListForAttribute = <T>(
     {}
   );
 };
+
+export const sumArray = <T>(
+  objects: T[],
+  sumFunction: (object: T) => number
+): number => {
+  return objects.reduce((sum: number, object) => sum + sumFunction(object), 0);
+};
