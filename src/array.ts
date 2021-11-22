@@ -13,6 +13,21 @@ export const objectListForAttribute = <T>(
   );
 };
 
+export const objectListForAttributeByFunction = <T>(
+  objects: T[],
+  keyFunction: (object: T) => string | number
+): Record<string, T[]> => {
+  return objects.reduce(
+    (objectListForAttribute: Record<string, T[]>, object: T) => {
+      objectListForAttribute[keyFunction(object)]
+        ? objectListForAttribute[keyFunction(object)].push(object)
+        : (objectListForAttribute[keyFunction(object)] = [object]);
+      return objectListForAttribute;
+    },
+    {}
+  );
+};
+
 export const sumArray = <T>(
   objects: T[],
   sumFunction: (object: T) => number

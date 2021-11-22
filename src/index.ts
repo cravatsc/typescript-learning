@@ -1,4 +1,8 @@
-import { objectListForAttribute, sumArray } from './array';
+import {
+  objectListForAttribute,
+  objectListForAttributeByFunction,
+  sumArray
+} from './array';
 
 console.log('hello');
 
@@ -32,6 +36,12 @@ const dogs: Dog[] = [
 
 const groupByBreed = objectListForAttribute(dogs, 'breed');
 console.log(groupByBreed);
+
+const groupByBreedWithFunction = objectListForAttributeByFunction(
+  dogs,
+  (dog) => dog.age
+);
+console.log(groupByBreedWithFunction);
 
 const totalMilesWalkedByDogs = sumArray(dogs, (dog) => dog.milesWalked);
 console.log(totalMilesWalkedByDogs);
