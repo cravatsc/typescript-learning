@@ -1,10 +1,8 @@
 import {
-  objectListForAttribute,
-  objectListForAttributeByFunction,
+  groupByKey,
+  groupByFunction,
   sumArray
 } from './array';
-
-console.log('hello');
 
 interface Dog {
   name: string;
@@ -34,10 +32,10 @@ const dogs: Dog[] = [
   }
 ];
 
-const groupByBreed = objectListForAttribute(dogs, 'breed');
+const groupByBreed = groupByKey(dogs, 'breed');
 console.log(groupByBreed);
 
-const groupByBreedWithFunction = objectListForAttributeByFunction(
+const groupByBreedWithFunction = groupByFunction(
   dogs,
   (dog) => dog.age
 );
