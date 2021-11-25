@@ -1,31 +1,27 @@
-export const objectListForAttribute = <T>(
+export const groupByKey = <T>(
   objects: T[],
-  attribute: string
+  key: string
 ): Record<string, T[]> => {
-  return objects.reduce(
-    (objectListForAttribute: Record<string, T[]>, object: T) => {
-      objectListForAttribute[object[attribute]]
-        ? objectListForAttribute[object[attribute]].push(object)
-        : (objectListForAttribute[object[attribute]] = [object]);
-      return objectListForAttribute;
-    },
-    {}
-  );
+  return objects.reduce((grouped: Record<string, T[]>, object: T) => {
+    const keyValue = object[key];
+    grouped[keyValue] = grouped[keyValue]
+      ? [...grouped[keyValue], object]
+      : [object];
+    return grouped;
+  }, {});
 };
 
-export const objectListForAttributeByFunction = <T>(
+export const groupByFunction = <T>(
   objects: T[],
-  keyFunction: (object: T) => string | number
+  func: (object: T) => string | number
 ): Record<string, T[]> => {
-  return objects.reduce(
-    (objectListForAttribute: Record<string, T[]>, object: T) => {
-      objectListForAttribute[keyFunction(object)]
-        ? objectListForAttribute[keyFunction(object)].push(object)
-        : (objectListForAttribute[keyFunction(object)] = [object]);
-      return objectListForAttribute;
-    },
-    {}
-  );
+  return objects.reduce((grouped: Record<string, T[]>, object: T) => {
+    const keyValue = func(object);
+    grouped[keyValue] = grouped[keyValue]
+      ? [...grouped[keyValue], object]
+      : [object];
+    return grouped;
+  }, {});
 };
 
 export const sumArray = <T>(
