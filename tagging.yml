@@ -14,10 +14,10 @@ jobs:
         displayName: Fetch all tags
       - script: |
           previous_version=$(git tag | grep -E '^[0-9]+\.[0-9]+\.[0-9]+$' | sort --version-sort --reverse | head -n 1)
-          if [["$previous_version" == ""]]; then
+          if ["$previous_version" == ""]; then
             previous_version=0.0.0
           fi
-          if ![["$previous_version" =~ [0-9]+\.[0-9]+\.[0-9]]]; then
+          if !["$previous_version" =~ [0-9]+\.[0-9]+\.[0-9]]; then
             echo "Unknown previous version format: $previous_version"
             exit 1
           fi
@@ -33,11 +33,11 @@ jobs:
           is_major_version_update=$(System.PullRequest.Labels | grep 'major' || echo 'false')
           is_minor_version_update=$(System.PullRequest.Labels | grep 'minor' || echo 'false')
 
-          if [[is_major_version_update != 'false']]; then
+          if [is_major_version_update != 'false']; then
             major_version=$((major_version + 1))
             minor_version=0
             patch_version=0
-          elif [[is_minor_version_update != 'false']]; then
+          elif [is_minor_version_update != 'false']; then
             minor_version=$((minor_version + 1))
             patch_version=0
           else
