@@ -22,5 +22,16 @@ stages:
 
     jobs:
       - template: build.yml
+      - template: tagging.yml
+
+  - stage: package
+    displayName: package
+    dependsOn: build
+    condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
+
+    jobs:
+      - template: package.yml
+        parameters:
+          buildVersion: $(new_version)
 
 
