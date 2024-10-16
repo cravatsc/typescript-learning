@@ -11,5 +11,5 @@ pool:
 
 steps:
 - template: build.yml
-  displayName: 'Build Step'
+  name: 'Build Step'
 
