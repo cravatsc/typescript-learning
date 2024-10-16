@@ -52,6 +52,8 @@ jobs:
         displayName: Generate new version
       - script: |
           new_version=$(echo $(new_version))
+          echo $new_version
+          echo $(merge_commit)
           git tag -f $new_version $(merge_commit)
           git push -f origin $new_version
         displayName: Tag commit with new version
