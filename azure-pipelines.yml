@@ -22,12 +22,18 @@ stages:
 
     jobs:
       - template: build.yml
+
+  - stage: tag
+    dependsOn: build
+    jobs:
       - template: tagging.yml
 
   - stage: package
     displayName: package
-    dependsOn: build
-    condition: and(succeeded(), eq(variables['Build.SourceBranchName'], 'main'))
+    dependsOn: 
+      - build
+      - tag
+    condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'), eq(variables['Build.Reason'], 'PullRequest'))
 
     jobs:
       - template: package.yml
