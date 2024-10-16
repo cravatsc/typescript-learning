@@ -9,6 +9,7 @@ jobs:
 
     steps:
       - checkout: self
+        persistCredentials: true
       - script: |
           git fetch --tags --quiet
         displayName: Fetch all tags
