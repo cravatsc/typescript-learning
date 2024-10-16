@@ -9,7 +9,11 @@ trigger:
 pool:
   vmImage: ubuntu-latest
 
-steps:
-- template: build.yml
+stages:
+  - stage: build
+    displayName: build
+
+    jobs:
+      - template: build.yml
 
 
