@@ -22,6 +22,10 @@ stages:
 
     jobs:
       - template: build.yml
+
+  - stage: tag
+    dependsOn: build
+    jobs:
       - template: tagging.yml
 
   - stage: package
