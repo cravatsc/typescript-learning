@@ -14,7 +14,8 @@ jobs:
         npm run build
       displayName: 'npm install and build'
 
-    # - script: echo "Parameter version: ${{parameters.buildVersion}}"
-    # - script: |
-    #     LATEST_TAG=$(git describe --tags --abbrev=0)
-    #     echo "Git tag version: $LATEST_TAG"
+    - script: | 
+        echo "Parameter version: ${{parameters.buildVersion}}"
+    - script: |
+        LATEST_TAG=$(git describe --tags --abbrev=0)
+        echo "Git tag version: $LATEST_TAG"
