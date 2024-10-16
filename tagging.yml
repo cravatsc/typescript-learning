@@ -46,7 +46,7 @@ jobs:
             patch_version=$((patch_version + 1))
           fi
 
-          new_version=major_version.minor_version.patch_version
+          new_version="$major_version.$minor_version.$patch_version"
           echo "##vso[task.setvariable variable=new_version]$new_version"
           echo "New version: $new_version"
         displayName: Generate new version
