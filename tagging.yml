@@ -17,9 +17,11 @@ jobs:
           if ["$previous_version" == ""]; then
             previous_version=0.0.0
           fi
-          if ! ["$previous_version" =~ [0-9]+\.[0-9]+\.[0-9]]; then
-            echo "Unknown previous version format: $previous_version"
-            exit 1
+          if [[ "$previous_version" =~ [0-9]+\.[0-9]+\.[0-9]+ ]]; then
+              echo "Previous version format is valid: $previous_version"
+          else
+              echo "Unknown previous version format: $previous_version"
+              exit 1
           fi
           echo "##vso[task.setvariable variable=previous_version]$previous_version"
           echo "Current version: $previous_version"
