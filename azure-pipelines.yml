@@ -30,7 +30,9 @@ stages:
 
   - stage: package
     displayName: package
-    dependsOn: build
+    dependsOn: 
+      - build
+      - tag
     condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'), eq(variables['Build.Reason'], 'PullRequest'))
 
     jobs:
