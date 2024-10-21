@@ -22,8 +22,10 @@ stages:
           vmImage: ubuntu-latest
         
         steps:
+          - checkout: self
+            persistCredentials: true
           - script: |
               git fetch --tags
-              LATEST_TAG=$(git describe --tags --abbrev=0)
+              LATEST_TAG=$(git describe --tags)
               echo "Latest tag: $LATEST_TAG"
             displayName: 'Tag the repository with a new version'
