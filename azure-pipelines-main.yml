@@ -14,8 +14,15 @@ stages:
     jobs:
       - template: build.yml
 
-  - stage: getTag
+  - stage: tag
     dependsOn: build
+    jobs:
+      - template: tagging.yml
+
+  - stage: getTag
+    dependsOn: 
+      - build
+      - tag
     jobs:
       - job: getTag
         displayName: Get git tag
