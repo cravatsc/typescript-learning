@@ -13,4 +13,14 @@ stages:
 
     jobs:
       - template: build.yml
-
+      - job: get labels
+        displayName: Get git labels
+        pool:
+          vmImage: ubuntu-latest
+        
+        steps:
+          - checkout: self
+            persistCredentials: true
+          - script: |
+              echo "Pull Request Labels: $(System.PullRequest.Labels)"
+            displayName: 'Print Labels'
