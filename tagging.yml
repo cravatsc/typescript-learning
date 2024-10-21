@@ -33,6 +33,7 @@ jobs:
           minor_version=$(echo $previous_version | cut -d '.' -f2)
           patch_version=$(echo $previous_version | cut -d '.' -f3)
 
+          echo $(System.PullRequest.Labels)
           is_major_version_update=$(System.PullRequest.Labels | grep 'major' || echo 'false')
           is_minor_version_update=$(System.PullRequest.Labels | grep 'minor' || echo 'false')
 
