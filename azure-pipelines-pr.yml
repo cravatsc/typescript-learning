@@ -13,7 +13,7 @@ stages:
 
     jobs:
       - template: build.yml
-      - job: get labels
+      - job: getLabels
         displayName: Get git labels
         pool:
           vmImage: ubuntu-latest
