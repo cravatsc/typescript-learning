@@ -28,11 +28,15 @@ jobs:
           echo "Current version: $previous_version"
         displayName: Get previous version
       - script: |
-          COMMIT_MESSAGE=$(git log -1 --pretty%B)
+          COMMIT_MESSAGE=$(git log -1)
           echo "Commite message: $COMMIT_MESSAGE"
         displayName: print commit message
       - script: |
-          PR_ID=$(System.PullRequest.PullRequestId)
+          COMMIT_ID=$(Build.SourceVersion)
+          PR_DETAILS=$(curl -s -u $(System.AccessToken): \
+               -H "Content-Type: application/json" \
+               "https://dev.azure.com/$(System.TeamProject)/_apis/git/repositories/$(Build.Repository.Name)/pullrequests?searchCriteria.status=completed&$filter=mergeCommitId eq '$COMMIT_ID'&api-version=7.1")
+          PR_ID=$(echo $PR_DETAILS | jq -r '.value[0].pullRequestId')
           echo "Pull Request ID: $PR_ID"
 
           # Fetch pull request details, including description, via API
