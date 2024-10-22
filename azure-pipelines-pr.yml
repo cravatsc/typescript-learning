@@ -31,10 +31,11 @@ stages:
                   "https://dev.azure.com/$(System.TeamProject)/$(Build.Repository.Name)/_apis/git/pullrequests/$PR_ID?api-version=6.0")
 
               # Extract PR description from the API response
-              PR_DESCRIPTION=$(echo $PR_DETAILS | jq -r '.description')
+              PR_DESCRIPTION=$(echo $PR_DETAILS)
 
               echo "Pull Request Description: $PR_DESCRIPTION"
             displayName: 'Print PR Description'
           - script: |
               PR_ID=$(System.PullRequest.PullRequestId)
               git commit --amend -m "some #label"
+            displayName: amend commit
