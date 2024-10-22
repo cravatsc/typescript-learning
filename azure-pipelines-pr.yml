@@ -29,7 +29,7 @@ stages:
               # Fetch pull request details, including description, via API
               PR_DETAILS=$(curl -s -u $(System.AccessToken): \
                   -H "Content-Type: application/json" \
-                  "https://dev.azure.com/$(System.TeamProject)/$(Build.Repository.Name)/_apis/git/pullrequests/$PR_ID?api-version=7.1")
+                  "https://dev.azure.com/$(System.TeamProject)/$(Build.Repository.Name)/_apis/git/pullrequests/14?api-version=7.1")
 
               # Extract PR description from the API response
               PR_DESCRIPTION=$(echo $PR_DETAILS)
