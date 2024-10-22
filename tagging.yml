@@ -36,11 +36,6 @@ jobs:
 
           COMMIT_MESSAGE=$(git log -1)
           echo "commit message: $COMMIT_MESSAGE"
-          is_major_version_update=$(echo "$COMMIT_MESSAGE" | grep '#major' || echo 'false')
-          is_minor_version_update=$(echo "$COMMIT_MESSAGE" | grep '#minor' || echo 'false')
-
-          echo "is major: $is_major_version_update"
-          echo "is minor: $is_minor_version_update"
 
           if [[ $COMMIT_MESSAGE == *"#major"* ]]; then
             major_version=$((major_version + 1))
