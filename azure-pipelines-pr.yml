@@ -13,4 +13,3 @@ stages:
 
     jobs:
       - template: build.yml
-
