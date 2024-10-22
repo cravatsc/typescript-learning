@@ -28,12 +28,30 @@ jobs:
           echo "Current version: $previous_version"
         displayName: Get previous version
       - script: |
+          COMMIT_MESSAGE=$(git log -1 --pretty%B)
+          echo "Commite message: $COMMIT_MESSAGE"
+        displayName: print commit message
+      - script: |
+          PR_ID=$(System.PullRequest.PullRequestId)
+          echo "Pull Request ID: $PR_ID"
+
+          # Fetch pull request details, including description, via API
+          PR_DETAILS=$(curl -s -u $(System.AccessToken): \
+               -H "Content-Type: application/json" \
+               "https://dev.azure.com/$(System.TeamProject)/$(Build.Repository.Name)/_apis/git/pullrequests/$PR_ID?api-version=7.1")
+
+          # Extract PR description from the API response
+          PR_DESCRIPTION=$(echo $PR_DETAILS | jq -r '.description')
+
+          echo "Pull Request Description: $PR_DESCRIPTION"
+        displayName: "Get PR Description"
+      - script: |
           previous_version=$(echo $(previous_version))
           major_version=$(echo $previous_version | cut -d '.' -f1)
           minor_version=$(echo $previous_version | cut -d '.' -f2)
           patch_version=$(echo $previous_version | cut -d '.' -f3)
 
-          echo "Pull Request Labels: $(System.PullRequest.Labels)"
+          
           is_major_version_update=$(echo "$(System.PullRequest.Labels)" | grep 'major' || echo 'false')
           is_minor_version_update=$(echo "$(System.PullRequest.Labels)" | grep 'minor' || echo 'false')
 
