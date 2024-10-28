@@ -37,12 +37,12 @@ jobs:
           major=$(awk -F'=' '/^major/ {print $2}' version.txt | tr -d '\r')
           minor=$(awk -F'=' '/^minor/ {print $2}' version.txt | tr -d '\r')
           
-          if [ "$major" -ge "$major_version" ]; then
+          if [ "$major" -gt "$major_version" ]; then
             echo "Updating major version."
             major_version=$((major))
             minor_version=0
             patch_version=0
-          elif [ "$minor" -ge "$minor_version" ]; then
+          elif [ "$minor" -gt "$minor_version" ]; then
             echo "Updating minor version."
             minor_version=$((minor))
             patch_version=0
