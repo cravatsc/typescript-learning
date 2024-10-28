@@ -43,14 +43,14 @@ jobs:
           # Export variables using the key as the variable name
             echo "##vso[task.setvariable variable=${key}]${value}"
           done < version.txt
-          echo "major: $(major)"
-          echo "minor: $(minor)"
+          echo $major
+          echo $minor
           
-          if [[ $(major) == $(major_version) ]]; then
+          if [ $major -eq $major_version ]; then
             major_version=$((major))
             minor_version=0
             patch_version=0
-          elif [[ $(minor) == $minor_version) ]]; then
+          elif [ $minor -eq $minor_version ]; then
             minor_version=$((minor))
             patch_version=0
           else
