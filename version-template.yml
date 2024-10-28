@@ -1,0 +1,5 @@
+variables:
+- name: major
+  value: 1
+- name: minor
+  value: 2
