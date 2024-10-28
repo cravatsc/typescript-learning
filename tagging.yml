@@ -36,6 +36,8 @@ jobs:
 
           # get version from file and compare
           while IFS='=' read -r key value; do
+            echo "key: $key"
+            echo "value: $value"
             case "$key" in
               major) major=$value ;;
               minor) minor=$value ;;
