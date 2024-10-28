@@ -13,42 +13,27 @@ stages:
 
     jobs:
       - template: build.yml
+
   - stage: tag
     dependsOn: build
     jobs:
-      - job: getVersion
-        displayName: setup gitversion
+      - template: tagging.yml
+
+  - stage: getTag
+    dependsOn: 
+      - build
+      - tag
+    jobs:
+      - job: getTag
+        displayName: Get git tag
         pool:
           vmImage: ubuntu-latest
-        steps:
-        - checkout: self
-          fetchDepth: 0
-        # - task: gitversion/setup@3.0.0
-        #   displayName: Install GitVersion
-        #   inputs:
-        #     versionSpec: '6.x'
-
-
-  # - stage: tag
-  #   dependsOn: build
-  #   jobs:
-  #     - template: tagging.yml
-
-  # - stage: getTag
-  #   dependsOn: 
-  #     - build
-  #     - tag
-  #   jobs:
-  #     - job: getTag
-  #       displayName: Get git tag
-  #       pool:
-  #         vmImage: ubuntu-latest
         
-  #       steps:
-  #         - checkout: self
-  #           persistCredentials: true
-  #         - script: |
-  #             git fetch --tags
-  #             LATEST_TAG=$(git describe --tags)
-  #             echo "Latest tag: $LATEST_TAG"
-  #           displayName: 'Tag the repository with a new version'
+        steps:
+          - checkout: self
+            persistCredentials: true
+          - script: |
+              git fetch --tags
+              LATEST_TAG=$(git describe --tags)
+              echo "Latest tag: $LATEST_TAG"
+            displayName: 'Tag the repository with a new version'
