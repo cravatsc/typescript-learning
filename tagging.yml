@@ -39,15 +39,12 @@ jobs:
 
           # get version from file and compare
           while IFS='=' read -r key value; do
-            if [ "$key" = "major" ]; then
-              major=$value
-              echo "##vso[task.setvariable variable=major]$value"
-            elif [ "$key" = "minor" ]; then
-              minor=$value
-              echo "##vso[task.setvariable variable=minor]$value"
-            fi
+            case "$key" in
+              major) major=$value ;;
+              minor) minor=$value ;;
+            esac
           done < version.txt
-          echo $major
+          echo "Major: $major"
           echo $minor
           
           if [ "$major" -eq "$major_version" ]; then
