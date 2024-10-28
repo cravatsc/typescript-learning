@@ -34,18 +34,8 @@ jobs:
           minor_version=$(echo $previous_version | cut -d '.' -f2)
           patch_version=$(echo $previous_version | cut -d '.' -f3)
 
-          echo cat version.txt
-          # get version from file and compare
-          while IFS='=' read -r key value; do
-            key=$(echo "$key" | tr -d '\r')
-            value=$(echo "$value" | tr -d '\r')
-            echo "key: $key"
-            echo "value: $value"
-            case "$key" in
-              major) major=$value ;;
-              minor) minor=$value ;;
-            esac
-          done < version.txt
+          major=$(awk -F'=' '/^major/ {print $2}' version.txt | tr -d '\r')
+          minor=$(awk -F'=' '/^minor/ {print $2}' version.txt | tr -d '\r')
           echo "File major: $major"
           echo "File minor: $minor"
           echo "Prev major: $major_version"
