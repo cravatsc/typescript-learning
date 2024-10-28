@@ -34,9 +34,6 @@ jobs:
           minor_version=$(echo $previous_version | cut -d '.' -f2)
           patch_version=$(echo $previous_version | cut -d '.' -f3)
 
-          major=0
-          minor=0
-
           # get version from file and compare
           while IFS='=' read -r key value; do
             case "$key" in
@@ -44,33 +41,25 @@ jobs:
               minor) minor=$value ;;
             esac
           done < version.txt
-          echo "Major: $major"
-          echo $minor
+          echo "File major: $major"
+          echo "File minor: $minor"
+          echo "Prev major: $major_version"
+          echo "Prev minor: $minor_version"
+          echo "Prev patch: $patch_version"
           
           if [ "$major" -eq "$major_version" ]; then
+            echo "Updating major version."
             major_version=$((major))
             minor_version=0
             patch_version=0
           elif [ "$minor" -eq "$minor_version" ]; then
+            echo "Updating minor version."
             minor_version=$((minor))
             patch_version=0
           else
+            echo "Updating patch version."
             patch_version=$((patch_version + 1))
           fi
-
-          # COMMIT_MESSAGE=$(git log -1)
-          # echo "commit message: $COMMIT_MESSAGE"
-
-          # if [[ $COMMIT_MESSAGE == *"#major"* ]]; then
-          #   major_version=$((major_version + 1))
-          #   minor_version=0
-          #   patch_version=0
-          # elif [[ $COMMIT_MESSAGE == *"#minor"* ]]; then
-          #   minor_version=$((minor_version + 1))
-          #   patch_version=0
-          # else
-          #   patch_version=$((patch_version + 1))
-          # fi
 
           new_version="$major_version.$minor_version.$patch_version"
           echo "##vso[task.setvariable variable=new_version]$new_version"
