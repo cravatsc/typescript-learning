@@ -6,6 +6,8 @@ jobs:
     
     variables:
       merge_commit: $(Build.SourceVersion)
+      requested_for_id: $(Build.RequestedForId)
+      requsted_for_email: $(Build.RequestedForEmail)
 
     steps:
       - checkout: self
@@ -58,7 +60,9 @@ jobs:
       - script: |
           new_version=$(echo $(new_version))
           echo $new_version
-          echo $(merge_commit)
-          git tag -f -a $new_version $(merge_commit) -m "$new_version"
+          echo $(requested_for_id)
+          echo $(requsted_for_email)
+          # git tag -f -a $new_version $(merge_commit) -m "$new_version"
+          git tag -f $new_version $(merge_commit)
           git push -f origin $new_version
         displayName: Tag commit with new version
