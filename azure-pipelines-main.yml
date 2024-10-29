@@ -43,6 +43,6 @@ stages:
             displayName: 'Install Node.js'
           - script: |
               npm version -from-git
-              echo $new_version
-              git push -f origin main
+              # echo $new_version
+              # git push -f origin main
             displayName: 'Commit package.json update'
