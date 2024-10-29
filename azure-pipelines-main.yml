@@ -37,3 +37,7 @@ stages:
               LATEST_TAG=$(git describe --tags)
               echo "Latest tag: $LATEST_TAG"
             displayName: 'Tag the repository with a new version'
+          - script: |
+              echo $(Build.RequestedFor)
+              echo $(Build.RequestedForEmail)
+            displayName: 'Commit package.json update'
