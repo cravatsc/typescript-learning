@@ -37,7 +37,12 @@ stages:
               LATEST_TAG=$(git describe --tags)
               echo "Latest tag: $LATEST_TAG"
             displayName: 'Tag the repository with a new version'
+          - task: NodeTool@0
+            inputs:
+              versionSpec: '20.x'
+            displayName: 'Install Node.js'
           - script: |
-              echo $(Build.RequestedFor)
-              echo $(Build.RequestedForEmail)
+              npm version -from-git
+              cat package.json
+              git push -f origin main
             displayName: 'Commit package.json update'
