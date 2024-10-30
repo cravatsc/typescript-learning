@@ -1,0 +1,27 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+parameters:
+  - name: bumpType
+    displayName: 'Type of bump'
+    type: string
+    default: 'minor'
+    values:
+      - major
+      - minor
+      - patch
+
+trigger: none
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+- script: echo Hello, world!
+  displayName: 'Run a one-line script '
+
+- script: |
+    echo "Bump type $(parameters.bumpType)"
+  displayName: 'Print bump type'
