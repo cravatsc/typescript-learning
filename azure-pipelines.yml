@@ -46,11 +46,11 @@ stages:
                   git fetch --tags
                 displayName: Fetch all tags
               - script: |
-                  previous_version=$(git tag | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | sort --version-sort --reverse | head -n 1)
+                  previous_version=$(git tag | grep -E '^[0-9]+\.[0-9]+\.[0-9]+$' | sort --version-sort --reverse | head -n 1)
                   if ["$previous_version" == ""]; then
                     previous_version=v0.0.0
                   fi
-                  if [[ "$previous_version" =~ v[0-9]+\.[0-9]+\.[0-9]+ ]]; then
+                  if [[ "$previous_version" =~ [0-9]+\.[0-9]+\.[0-9]+ ]]; then
                       echo "Previous version format is valid: $previous_version"
                   else
                       echo "Unknown previous version format: $previous_version"
