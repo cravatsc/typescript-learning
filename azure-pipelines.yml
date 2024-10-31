@@ -60,6 +60,7 @@ stages:
                   echo "Current tag version: $previous_version"
                 displayName: Get previous tag version
               - script: |
+                  previous_version=$(echo $(previous_version))
                   #get npm version from package.json
                   npm_version=$(node -p "require('./package.json').version")
                   echo "NPM version: $npm_version"
