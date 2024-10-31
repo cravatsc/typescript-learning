@@ -2,7 +2,6 @@
 # Build a general Node.js project with npm.
 # Add steps that analyze code, save build artifacts, deploy, and more:
 # https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
-# trigger: none
 trigger:
   branches:
     include:
@@ -31,6 +30,8 @@ stages:
         environment: production
         pool:
           vmImage: ubuntu-latest
+        variables:
+          merge_commit: $(Build.SourceVersion)
         strategy:
           runOnce:
             deploy:
@@ -42,30 +43,41 @@ stages:
                   versionSpec: '20.x'
                 displayName: 'Install Node.js'
               - script: |
+                  git fetch --tags
+                displayName: Fetch all tags
+              - script: |
+                  previous_version=$(git tag | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | sort --version-sort --reverse | head -n 1)
+                  if ["$previous_version" == ""]; then
+                    previous_version=v0.0.0
+                  fi
+                  if [[ "$previous_version" =~ v[0-9]+\.[0-9]+\.[0-9]+ ]]; then
+                      echo "Previous version format is valid: $previous_version"
+                  else
+                      echo "Unknown previous version format: $previous_version"
+                      exit 1
+                  fi
+                  echo "##vso[task.setvariable variable=previous_version]$previous_version"
+                  echo "Current version: $previous_version"
+                displayName: Get previous tag version
+              - script: |
                   #get npm version from package.json
                   npm_version=$(node -p "require('./package.json').version")
                   echo "NPM version: $npm_version"
-                  
-                  #get latest tag
-                  git fetch --tags
-                  previous_version=$(git describe --tags --abbrev=0)
-                  echo "Latest git tag: $previous_version"
 
                   previous_version_semver=${previous_version#v}
-                  
+                  echo "Previous semver version: $previous_version_semver"
+
                   if [ "$npm_version" = "$previous_version_semver" ]; then
                     echo "Error: NPM version ($npm_version) matches latest git tag/release ($previous_version_semver). Please update version in package.json"
                     exit 1
                   fi
 
-                  # Create new tag and push
-                  git config user.email "pipeline@azure.devops"
-                  git config user.name "Azure Pipeline"
-                  git tag -f -a "v$npm_version" -m "Release version $npm_version"
-                  git push origin "v$npm_version"
-                  
-                  echo "running npm publish here"
-                displayName: Check version and publish package
+                  echo "##vso[task.setvariable variable=npm_version]$npm_version"
+                dsplayName: Check new version against latest
+              - script: |
+                  git tag -f $new_version $(merge_commit)
+                  git push -f origin $new_version
+                displayName: Tag commit with new verison
 
 
 
