@@ -73,7 +73,7 @@ stages:
                   fi
 
                   echo "##vso[task.setvariable variable=npm_version]$npm_version"
-                dsplayName: Check new version against latest
+                displayName: Check new version against latest
               - script: |
                   git tag -f $new_version $(merge_commit)
                   git push -f origin $new_version
