@@ -68,7 +68,7 @@ stages:
                   # previous_version_semver=${previous_version#v}
                   echo "Previous tag version: $previous_version"
 
-                  if [ "$npm_version" = "$previous_version" ]; then
+                  if [[ ! "$npm_version" > "$previous_version" ]]; then
                     echo "Error: NPM version ($npm_version) matches latest git tag/release ($previous_version_semver). Please update version in package.json"
                     exit 1
                   fi
