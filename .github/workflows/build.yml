@@ -1,0 +1,16 @@
+name: Build
+
+on:
+  workflow_call:
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-verison: '20.x'
+      
+      - name: Install dependencies
+        run: npm run build
