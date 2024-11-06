@@ -1,0 +1,33 @@
+name: main workflow
+
+on:
+  pull_request:
+    branches: [ main ]
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+    inputs:
+      run_prerelease_publish:
+        description: 'Run prerelease and publish for PR'
+        required: true
+        type: boolean
+
+jobs:
+  build:
+    uses: ./.github/workflows/build.yml
+  
+  prerelease-pr-publish:
+    needs: build
+    if: |
+      github.event_name == 'pull_request' || 
+      (github.event_name == 'workflow_dispatch' && inputs.run_prerelease_publish)
+    uses: ./.github/workflows/prerelease.yml
+    with:
+      ref: ${{ github.event.pull_request.head.ref }}
+    
+  prerelease-merge:
+    needs: build
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    uses: ./.github/workflows/prerelease.yml
+    with:
+      ref: main
