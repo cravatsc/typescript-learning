@@ -5,12 +5,6 @@ on:
     branches: [ main ]
   push:
     branches: [ main ]
-  workflow_dispatch:
-    inputs:
-      run_prerelease_publish:
-        description: 'Run prerelease and publish for PR'
-        required: true
-        type: boolean
 
 jobs:
   build:
@@ -18,7 +12,8 @@ jobs:
   
   prerelease-pr-publish:
     needs: build
-    if: github.event_name == 'workflow_dispatch' && inputs.run_prerelease_publish
+    if: github.event_name == 'pull_request'
+    environment: prerelease
     uses: ./.github/workflows/prerelease.yml
     with:
       ref: ${{ github.event.pull_request.head.ref }}
