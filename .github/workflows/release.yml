@@ -37,3 +37,4 @@ jobs:
         run: |
           npm version ${{ inputs.bumpType }}
           git push --follow-tags
+          npm pack --dry-run

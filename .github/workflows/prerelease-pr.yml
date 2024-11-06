@@ -32,3 +32,4 @@ jobs:
         run: |
           npm version prerelease
           git push --follow-tags
+          npm pack --dry-run
