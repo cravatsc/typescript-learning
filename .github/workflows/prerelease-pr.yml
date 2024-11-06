@@ -1,0 +1,34 @@
+name: Prelease tagggins and publishing
+
+on:
+  workflow_call:
+    inputs:
+      ref:
+        required: true
+        type: string
+        
+jobs:
+  prerelease-tagging:
+    runs-on: windows-latest
+    environment: prerelease
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ inputs.ref }}
+      
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Configure Git
+        run: |
+          git config --global user.name "GitHub Actions Bot"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+      
+      - name: Version and commit
+        run: |
+          npm version prerelease
+          git push --follow-tags
