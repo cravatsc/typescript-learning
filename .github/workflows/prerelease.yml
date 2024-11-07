@@ -37,6 +37,6 @@ jobs:
       
       - name: Version and commit
         run: |
-          npm version prerelease
+          npm version prerelease --force
           git push --follow-tags
           npm pack --dry-run
