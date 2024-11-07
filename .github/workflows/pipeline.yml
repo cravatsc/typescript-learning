@@ -13,9 +13,10 @@ jobs:
   prerelease-pr-publish:
     needs: build
     if: github.event_name == 'pull_request'
-    uses: ./.github/workflows/prerelease-pr.yml
+    uses: ./.github/workflows/prerelease.yml
     with:
       ref: ${{ github.event.pull_request.head.ref }}
+      env: prerelease
     
   prerelease-merge:
     needs: build
