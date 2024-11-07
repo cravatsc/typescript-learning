@@ -26,6 +26,10 @@ jobs:
         with:
           node-version: 20
 
+      - name: modify file to make sure not saved
+        run: |
+          echo "test" >> version.txt
+
       - name: Configure Git
         run: |
           git config --global user.name "GitHub Actions Bot"
