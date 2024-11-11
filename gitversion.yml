@@ -1,7 +1,7 @@
 next-version: 1.0.0
-assembly-versioning-format: '{Major}.{Minor}.{Patch}.{github.run_number?? PreReleaseNumber}'
-assembly-file-versioning-format: '{Major}.{Minor}.{Patch}.{github.run_number ?? PreReleaseNumber}'
-assembly-informational-format: '{Major}.{Minor}.{Patch}.{github.run_number ?? PreReleaseNumber}'
+assembly-versioning-format: '{Major}.{Minor}.{Patch}'
+assembly-file-versioning-format: '{Major}.{Minor}.{Patch}'
+assembly-informational-format: '{Major}.{Minor}.{Patch}'
 tag-prefix: '[vV]'
 mode: ContinuousDelivery
 commit-date-format: 'yyyy-MM-dd'
@@ -13,6 +13,4 @@ branches:
     is-release-branch: true
     track-merge-target: false
     tracks-release-branches: false
-ignore:
-  sha: []
 update-build-number: true
