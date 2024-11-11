@@ -7,12 +7,12 @@ on:
     branches: [ main ]
 
 jobs:
-  build:
-    uses: ./.github/workflows/build.yml
+  # build:
+  #   uses: ./.github/workflows/build.yml
   
   version:
     runs-on: windows-latest
-    needs: build
+    # needs: build
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -26,7 +26,7 @@ jobs:
         uses: gittools/actions/gitversion/execute@v3.0.0
         with:
           useConfigFile: true
-          configFilePath: gitversion.yml
+          configFilePath: ./gitversion.yml
 
   
   # prerelease-pr-publish:
