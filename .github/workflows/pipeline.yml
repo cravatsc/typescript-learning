@@ -1,8 +1,8 @@
 name: main workflow
 
 on:
-  pull_request:
-    branches: [ main ]
+  # pull_request:
+  #   branches: [ main ]
   push:
     branches: [ main ]
 
@@ -10,17 +10,32 @@ jobs:
   build:
     uses: ./.github/workflows/build.yml
   
-  prerelease-pr-publish:
+  version:
+    runs-on: windows-latest
     needs: build
-    if: github.event_name == 'pull_request'
-    uses: ./.github/workflows/prerelease.yml
-    with:
-      ref: ${{ github.event.pull_request.head.ref }}
-      env: prerelease
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Install GitVersion
+        uses: gittools/actions/gitversion/setup@v3.0.0
+        with:
+          versionSpec: '6.x'
+      - name: Determine Version
+        uses: gittools/actions/gitversion/execute@v3.0.0
+  
+  # prerelease-pr-publish:
+  #   needs: build
+  #   if: github.event_name == 'pull_request'
+  #   uses: ./.github/workflows/prerelease.yml
+  #   with:
+  #     ref: ${{ github.event.pull_request.head.ref }}
+  #     env: prerelease
     
-  prerelease-merge:
-    needs: build
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-    uses: ./.github/workflows/prerelease.yml
-    with:
-      ref: main
+  # prerelease-merge:
+  #   needs: build
+  #   if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+  #   uses: ./.github/workflows/prerelease.yml
+  #   with:
+  #     ref: main
