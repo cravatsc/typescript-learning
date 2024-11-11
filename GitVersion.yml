@@ -1,16 +1,15 @@
 next-version: 1.0.0
-assembly-versioning-format: '{Major}.{Minor}.{Patch}'
-assembly-file-versioning-format: '{Major}.{Minor}.{Patch}'
-assembly-informational-format: '{Major}.{Minor}.{Patch}'
+assembly-versioning-scheme: MajorMinorPatch
+assembly-file-versioning-scheme: MajorMinorPatch
 tag-prefix: '[vV]'
 mode: ContinuousDelivery
 commit-date-format: 'yyyy-MM-dd'
-# branches:
-#   main:
-#     mode: ContinuousDelivery 
-#     regex: ^main
-#     increment: Patch
-#     is-release-branch: true
-#     track-merge-target: false
-#     tracks-release-branches: false
-# update-build-number: true
+update-build-number: true
+branches:
+  main:
+    mode: ContinuousDelivery 
+    regex: ^main
+    increment: Patch
+    is-release-branch: true
+    track-merge-target: false
+    tracks-release-branches: false
