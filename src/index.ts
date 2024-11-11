@@ -29,6 +29,12 @@ const dogs: Dog[] = [
     age: 3,
     breed: 'Bernie',
     milesWalked: 6
+  },
+  {
+    name: 'Frank',
+    age: 6,
+    breed: 'Cat',
+    milesWalked: 0
   }
 ];
 
