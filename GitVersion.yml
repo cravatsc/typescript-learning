@@ -27,7 +27,7 @@ branches:
     source-branches: []
     is-source-branch-for: []
     tracks-release-branches: false
-    is-release-branch: false
+    is-release-branch: true
     is-main-branch: true
     pre-release-weight: 55000
   feature:
