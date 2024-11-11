@@ -27,6 +27,8 @@ jobs:
         with:
           useConfigFile: true
           configFilePath: gitversion.yml
+        env:
+          ACTIONS_STEP_DEBUG: true
   
   # prerelease-pr-publish:
   #   needs: build
