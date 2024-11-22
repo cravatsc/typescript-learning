@@ -11,3 +11,5 @@ And its very fun!
 #### CI/CD Sandbox
 
 This project is also used as a playground repo for working on Github Actions and Azure devops pipelines.
+
+Also testing different versioning strategies.
