@@ -12,8 +12,8 @@ merge-message-formats: {}
 update-build-number: true
 semantic-version-format: Strict
 strategies:
-- ConfiguredNextVersion
-- Mainline
+  - ConfiguredNextVersion
+  - Mainline
 branches:
   main:
     mode: ContinuousDeployment
@@ -48,3 +48,4 @@ is-source-branch-for: []
 tracks-release-branches: false
 is-release-branch: false
 is-main-branch: false
+next-version: 4.0.0
