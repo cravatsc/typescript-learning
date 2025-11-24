@@ -1,6 +1,9 @@
-export const groupByKey = <T>(objects: T[], key: string): Record<string, T[]> =>
+export const groupByKey = <T extends Record<string, any>>(
+  objects: T[],
+  key: keyof T
+): Record<string, T[]> =>
   objects.reduce((grouped: Record<string, T[]>, object: T) => {
-    const keyValue = object[key];
+    const keyValue = String(object[key]);
     grouped[keyValue] = grouped[keyValue]
       ? [...grouped[keyValue], object]
       : [object];
