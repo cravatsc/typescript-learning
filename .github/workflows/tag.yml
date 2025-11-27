@@ -60,12 +60,22 @@ jobs:
           patch_version=$(echo $sem_ver | cut -d '.' -f3)
 
           if [ ${{ inputs.bumpType }} == "major" ]; then
-            echo "major bump"
+            major_version=$((major_version + 1))
+            minor_version=0
+            patch_version=0
+            echo "Updating major version to: $major_version.$minor_version.$patch_version"
           elif [ ${{ inputs.bumpType }} == "minor" ]; then
-            echo "minor bump"
+            minor_version=$((minor_version + 1))
+            patch_version=0
+            echo "Updating minor version to: $major_version.$minor_version.$patch_version"
           elif [ ${{ inputs.bumpType }} == "patch" ]; then
-            echo "patch bump"
+            patch_version=$((patch_version + 1))
+            echo "Updating patch version to: $major_version.$minor_version.$patch_version"
           fi
+
+          new_version="$major_version.$minor_version.$patch_version"
+          echo "new_version=$new_version" >> $GITHUB_OUTPUT
+          echo "New version: $new_version"
 
       - name: Tag commit with new version
         run: |
