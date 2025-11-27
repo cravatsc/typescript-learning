@@ -50,4 +50,22 @@ jobs:
       - name: Print previous tag
         run: echo ${{steps.latest-tag.outputs.PREVIOUS_TAG}}
 
-      # - name:
+      - name: Generate new tag version
+        run: |
+          previous_version=${{steps.latest-tag.outputs.PREVIOUS_TAG}})
+          sem_ver=$(echo $previous_version | cut -d '/' -f2 | cut -d 'v' -f2)
+
+          major_version=$(echo $sem_ver | cut -d '.' -f1)
+          minor_version=$(echo $sem_ver | cut -d '.' -f2)
+          patch_version=$(echo $sem_ver | cut -d '.' -f3)
+
+          if [ ${{ inputs.bumpType }} == "major"]; then
+            echo "major bump"
+          elif [ ${{ inputs.bumpType }} == "minor"]; then
+            echo "minor bump"
+          elif [ ${{ inputs.bumpType }} == "patch"]; then
+            echo "patch bump"
+          fi
+
+      - name: Tag commit with new version
+        run: |
