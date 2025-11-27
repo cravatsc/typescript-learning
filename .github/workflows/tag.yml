@@ -52,7 +52,7 @@ jobs:
 
       - name: Generate new tag version
         run: |
-          previous_version=${{steps.latest-tag.outputs.PREVIOUS_TAG}})
+          previous_version=${{steps.latest-tag.outputs.PREVIOUS_TAG}}
           sem_ver=$(echo $previous_version | cut -d '/' -f2 | cut -d 'v' -f2)
 
           major_version=$(echo $sem_ver | cut -d '.' -f1)
