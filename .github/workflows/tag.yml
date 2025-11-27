@@ -59,11 +59,11 @@ jobs:
           minor_version=$(echo $sem_ver | cut -d '.' -f2)
           patch_version=$(echo $sem_ver | cut -d '.' -f3)
 
-          if [ ${{ inputs.bumpType }} == "major"]; then
+          if [ ${{ inputs.bumpType }} == "major" ]; then
             echo "major bump"
-          elif [ ${{ inputs.bumpType }} == "minor"]; then
+          elif [ ${{ inputs.bumpType }} == "minor" ]; then
             echo "minor bump"
-          elif [ ${{ inputs.bumpType }} == "patch"]; then
+          elif [ ${{ inputs.bumpType }} == "patch" ]; then
             echo "patch bump"
           fi
 
