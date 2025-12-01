@@ -79,7 +79,22 @@ jobs:
           echo "New version: $new_version"
 
       - name: Tag commit with new version
+        id: create-tag
         run: |
           new_tag=${{inputs.project}}/v${{steps.generate-new-tag-version.outputs.new_version}}
           git tag $new_tag
           git push origin $new_tag
+          echo "tag=$new_tag" >> $GITHUB_OUTPUT
+          echo "::notice::Successfully created tag: $new_tag"
+
+      - name: Create workflow summary
+        run: |
+          echo "## ✅ Tag Created Successfully" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Property | Value |" >> $GITHUB_STEP_SUMMARY
+          echo "|----------|-------|" >> $GITHUB_STEP_SUMMARY
+          echo "| **Project** | \`${{inputs.project}}\` |" >> $GITHUB_STEP_SUMMARY
+          echo "| **Previous Tag** | \`${{steps.latest-tag.outputs.previous_tag}}\` |" >> $GITHUB_STEP_SUMMARY
+          echo "| **New Tag** | \`${{steps.create-tag.outputs.tag}}\` |" >> $GITHUB_STEP_SUMMARY
+          echo "| **Bump Type** | \`${{inputs.bumpType}}\` |" >> $GITHUB_STEP_SUMMARY
+          echo "| **Created By** | @${{ github.actor }} |" >> $GITHUB_STEP_SUMMARY
