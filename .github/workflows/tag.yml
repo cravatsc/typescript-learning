@@ -89,7 +89,7 @@ jobs:
 
       - name: Create workflow summary
         run: |
-          echo "## ✅ Tag Created Successfully" >> $GITHUB_STEP_SUMMARY
+          echo "## Tag Created Successfully" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "| Property | Value |" >> $GITHUB_STEP_SUMMARY
           echo "|----------|-------|" >> $GITHUB_STEP_SUMMARY
