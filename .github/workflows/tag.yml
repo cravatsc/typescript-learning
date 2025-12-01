@@ -19,6 +19,10 @@ on:
           - "major"
           - "minor"
           - "patch"
+concurrency:
+  group: tag-${{ inputs.project }}
+  cancel-in-progress: false
+
 jobs:
   tag:
     runs-on: ubuntu-latest
@@ -75,16 +79,28 @@ jobs:
           fi
 
           new_version="$major_version.$minor_version.$patch_version"
-          echo "new_version=$new_version" >> $GITHUB_OUTPUT
-          echo "New version: $new_version"
+          new_tag=${{inputs.project}}/v$new_version
+          echo "new_tag=$new_tag" >> $GITHUB_OUTPUT
+          echo "New tag: $new_tag"
+
+      - name: Check if tag already exists
+        run: |
+          new_tag=${{steps.generate-new-tag-version.outputs.new_tag}}
+          if git rev-parse "$new_tag" >/dev/null 2>&1; then
+            echo "::error::Tag $new_tag already exists. If you need to recreate it, delete the existing tag first:"
+            echo "::error::  git tag -d $new_tag"
+            echo "::error::  git push origin :refs/tags/$new_tag"
+            echo "::error::Or use a different bump type to create a newer version."
+            exit 1
+          fi
+          echo "::notice::Tag $new_tag does not exist, proceeding with creation"
 
       - name: Tag commit with new version
         id: create-tag
         run: |
-          new_tag=${{inputs.project}}/v${{steps.generate-new-tag-version.outputs.new_version}}
+          new_tag=${{steps.generate-new-tag-version.outputs.new_tag}}
           git tag -a "$new_tag" -m "Release $new_tag"
-          git push origin $new_tag
-          echo "tag=$new_tag" >> $GITHUB_OUTPUT
+          git push origin "$new_tag"
           echo "::notice::Successfully created tag: $new_tag"
 
       - name: Create workflow summary
