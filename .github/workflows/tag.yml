@@ -82,7 +82,7 @@ jobs:
         id: create-tag
         run: |
           new_tag=${{inputs.project}}/v${{steps.generate-new-tag-version.outputs.new_version}}
-          git tag $new_tag
+          git tag -a "$new_tag" -m "Release $new_tag"
           git push origin $new_tag
           echo "tag=$new_tag" >> $GITHUB_OUTPUT
           echo "::notice::Successfully created tag: $new_tag"
